@@ -9,6 +9,7 @@ const app = new App({
 // Command to open the modal when "/standup" is used in Slack
 app.command('/standup', async ({ command, ack, client }) => {
   await ack(); // Acknowledge the slash command request to Slack
+  console.log(command)
 
   // Open the modal
   await client.views.open({
