@@ -1,0 +1,24 @@
+{
+  "name": "daily-tami",
+  "version": "1.0.0",
+  "description": "Daily StandUp Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rafaela9136/daily-tami.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rafaela9136/daily-tami/issues"
+  },
+  "homepage": "https://github.com/Rafaela9136/daily-tami#readme",
+  "dependencies": {
+    "@slack/bolt": "^4.2.1",
+    "dotenv": "^16.4.7"
+  }
+}
