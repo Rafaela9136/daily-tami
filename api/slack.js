@@ -20,53 +20,14 @@ export default async function handler(req, res) {
           view: {
             type: 'modal',
             callback_id: 'standup_modal',
-            title: {
-              type: 'plain_text',
-              text: 'Configure Standup Meeting'
-            },
+            title: { type: 'plain_text', text: 'Standup Meeting' },
             blocks: [
               {
                 type: 'section',
-                block_id: 'standup_channel',
-                text: {
-                  type: 'mrkdwn',
-                  text: 'Please select the channel for the standup meeting:'
-                },
-                accessory: {
-                  type: 'channels_select',
-                  action_id: 'channel_select'
-                }
-              },
-              {
-                type: 'section',
-                block_id: 'standup_users',
-                text: {
-                  type: 'mrkdwn',
-                  text: 'Select users to participate in the standup meeting:'
-                },
+                text: { type: 'mrkdwn', text: 'Select participants for the standup.' },
                 accessory: {
                   type: 'multi_users_select',
-                  action_id: 'users_select',
-                  placeholder: {
-                    type: 'plain_text',
-                    text: 'Select users'
-                  }
-                }
-              },
-              {
-                type: 'section',
-                block_id: 'standup_submit',
-                text: {
-                  type: 'mrkdwn',
-                  text: 'Click "Submit" to create the standup meeting.'
-                },
-                accessory: {
-                  type: 'button',
-                  text: {
-                    type: 'plain_text',
-                    text: 'Submit'
-                  },
-                  action_id: 'submit_standup'
+                  action_id: 'users_select'
                 }
               }
             ]
