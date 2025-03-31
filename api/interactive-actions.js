@@ -18,8 +18,6 @@ export default async function handler(req, res) {
   try {
     // Handle Modal Submission
     if (payload.type === 'view_submission' && payload.view.callback_id === 'standup_modal') {
-      console.log("entrei no view_submission")
-
       let selectedUsers = [];
       let selectedChannel = null;
 
@@ -74,8 +72,8 @@ export default async function handler(req, res) {
         view: {
           type: "modal",
           callback_id: "user_standup_modal",
-          title: { type: "plain_text", text: "Standup Report" },
-          submit: { type: "plain_text", text: "Submit" },
+          title: { type: "plain_text", text: "Compartilhe sua daily" },
+          submit: { type: "plain_text", text: "Enviar" },
           blocks: [
             {
               type: "input",
@@ -92,7 +90,7 @@ export default async function handler(req, res) {
             {
               type: "input",
               block_id: "question_3",
-              label: { type: "plain_text", text: "⚡️ Bloqueios?" },
+              label: { type: "plain_text", text: "⚠️ Bloqueios?" },
               element: { type: "plain_text_input", action_id: "answer_3" }
             }
           ]
@@ -114,9 +112,6 @@ export default async function handler(req, res) {
         blockers: values.question_3.answer_3.value,
       };
 
-      const message = `🚀 <@${userId}> compartilhou sua daily:\n\n✨ *O que fez desde a última daily?*\n${answers.yesterday}\n💡 *O que vai fazer hoje?*\n${answers.today}\n⚡️ *Bloqueios?*\n${answers.blockers}`;
-      console.log(message)
-
       // Fetch users & channel from Firestore
       const standupData = await db.collection('standups').doc('current').get();
 
@@ -126,14 +121,50 @@ export default async function handler(req, res) {
 
       const { users, channel } = standupData.data();
 
-      console.log("Triggering standup for users:", users);
-      console.log("Triggering standup for channel:", channel);
-
       await app.client.chat.postMessage({
-        channel: channel, // Send to the standup channel
-        text: message
+        channel: channel,
+        "attachments": [
+          {
+            "mrkdwn_in": ["text"],
+            "color": "#3498db",
+            "pretext": `:rocket: <@${userId}> compartilhou sua daily:`,
+            "fields": 
+            [
+              {
+                  "title": "O que fez desde a última atualização?",
+                  "value": answers.yesterday,
+                  "short": false
+              }
+            ]
+          },
+          {
+            "mrkdwn_in": ["text"],
+            "color": "#2ecc71",
+            "fields": 
+            [
+              {
+                  "title": "Quais seus planos para hoje?",
+                  "value": answers.today,
+                  "short": false
+              }
+            ]
+          },
+          {
+            "mrkdwn_in": ["text"],
+            "color": "#e74c3c",
+            "fields": 
+            [
+              {
+                  "title": "Bloqueios?",
+                  "value": answers.blockers,
+                  "short": false
+              }
+            ]
+          }
+        ]
       });
-
+      
+      
       console.log("✅ Standup response sent!");
       res.status(200).send();
       return;

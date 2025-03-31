@@ -29,15 +29,25 @@ export default async function handler(req, res) {
       view: {
         type: "modal",
         callback_id: 'standup_modal',
-        title: { type: "plain_text", text: "Setup a startup" },
+        title: { type: "plain_text", text: "Configure a daily" },
         blocks: [
           {
-            type: "section",
-            text: { type: "mrkdwn", text: "➕ To start tracking your team's tasks, *add me to a channel* and I'll introduce myself. I'm usually added to a team or project channel. Type `/invite @TaskBot` from the channel or pick a channel on the right."
+            type: "input",
+            block_id: "channel_select",
+            label: {
+              type: "plain_text",
+              text: "Select a channel for the standup"
             },
-            accessory: {
+            element: {
               type: "conversations_select",
-              placeholder: { type: "plain_text", text: "Select a channel...", emoji: true }
+              action_id: "select_standup_channel",
+              placeholder: {
+                type: "plain_text",
+                text: "Select a channel..."
+              },
+              filter: {
+                include: ["public", "private"]
+              }
             }
           },
           {
