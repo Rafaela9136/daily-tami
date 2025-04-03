@@ -59,53 +59,10 @@ export default async function handler(req, res) {
       console.log("Reminder message sent for user:", user);
     }
 
-    console.log("Reminder messages sent for users!");
+    console.log("Reminder messages sent!");
     return res.status(200).json({ message: "Reminder messages sent successfully!" });
   } catch (error) {
     console.error('Error triggering standup:', error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 }
-
-app.action('open_standup_modal', async ({ body, ack, client }) => {
-  console.log("📩 Received button click event!");
-
-  await ack(); // ✅ Acknowledge first
-
-  console.log("✅ Action acknowledged!");
-  console.log("🔍 Full Payload:", JSON.stringify(body, null, 2));
-
-  try {
-    await client.views.open({
-      trigger_id: body.trigger_id,
-      view: {
-        type: "modal",
-        callback_id: "standup_submission",
-        title: { type: "plain_text", text: "Standup Report" },
-        submit: { type: "plain_text", text: "Submit" },
-        blocks: [
-          {
-            type: "input",
-            block_id: "question_1",
-            label: { type: "plain_text", text: "What did you do yesterday?" },
-            element: { type: "plain_text_input", action_id: "answer_1" }
-          },
-          {
-            type: "input",
-            block_id: "question_2",
-            label: { type: "plain_text", text: "What will you do today?" },
-            element: { type: "plain_text_input", action_id: "answer_2" }
-          },
-          {
-            type: "input",
-            block_id: "question_3",
-            label: { type: "plain_text", text: "Any blockers?" },
-            element: { type: "plain_text_input", action_id: "answer_3" }
-          }
-        ]
-      }
-    });
-  } catch (error) {
-    console.error("Error opening standup modal:", error);
-  }
-});
