@@ -55,6 +55,8 @@ export default async function handler(req, res) {
           }
         ]
       });
+
+      console.log("Standup message sent for user:", user);
     }
 
     console.log("Standup messages sent!");

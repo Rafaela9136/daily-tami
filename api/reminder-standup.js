@@ -55,10 +55,12 @@ export default async function handler(req, res) {
           }
         ]
       });
+
+      console.log("Reminder message sent for user:", user);
     }
 
-    console.log("Standup messages sent!");
-    return res.status(200).json({ message: "Standup messages sent successfully!" });
+    console.log("Reminder messages sent for users!");
+    return res.status(200).json({ message: "Reminder messages sent successfully!" });
   } catch (error) {
     console.error('Error triggering standup:', error);
     return res.status(500).json({ error: "Internal Server Error" });
