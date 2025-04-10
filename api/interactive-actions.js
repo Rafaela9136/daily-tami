@@ -79,19 +79,19 @@ export default async function handler(req, res) {
               type: "input",
               block_id: "question_1",
               label: { type: "plain_text", text: "✨ O que fez desde a última daily?" },
-              element: { type: "plain_text_input", action_id: "answer_1" }
+              element: { type: "plain_text_input", action_id: "answer_1", multiline: true }
             },
             {
               type: "input",
               block_id: "question_2",
               label: { type: "plain_text", text: "💡 O que vai fazer hoje?" },
-              element: { type: "plain_text_input", action_id: "answer_2" }
+              element: { type: "plain_text_input", action_id: "answer_2", multiline: true }
             },
             {
               type: "input",
               block_id: "question_3",
               label: { type: "plain_text", text: "⚠️ Bloqueios?" },
-              element: { type: "plain_text_input", action_id: "answer_3" }
+              element: { type: "plain_text_input", action_id: "answer_3", multiline: true }
             }
           ]
         }
